@@ -6,12 +6,15 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import PostsService from './post.service';
 import CreatePostDto from './dto/create-post.dto';
 import UpdatePostDto from './dto/update-post.dto';
+import JwtAuthenticationGuard from 'src/guards/jwt-auth.guard';
 
 @Controller('posts')
+@UseGuards(JwtAuthenticationGuard)
 export default class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
