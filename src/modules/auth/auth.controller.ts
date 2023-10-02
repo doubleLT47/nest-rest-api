@@ -11,14 +11,11 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import CreateUserDto from '../user/dtos/create-user.dto';
-import { LocalAuthenticationGuard } from '../guards/local-auth.guard';
+import { LocalAuthenticationGuard } from '../../guards/local-auth.guard';
 import { RequestWithUser } from './auth.interface';
 
 @Controller('auth')
 @UseInterceptors(ClassSerializerInterceptor)
-// @SerializeOptions({
-//   strategy: 'excludeAll'
-// })
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 

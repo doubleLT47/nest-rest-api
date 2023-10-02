@@ -8,4 +8,8 @@ export default class CreatePostDto {
   @IsString()
   @IsNotEmpty()
   title: string;
+
+  @IsString()
+  @IsNotEmpty()
+  category: string;
 }
