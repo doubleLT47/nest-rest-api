@@ -73,7 +73,7 @@ export class AuthService {
       id,
       email,
     });
-    user.password = undefined;
+    // user.password = undefined;
     return { user, accessToken };
   }
 
