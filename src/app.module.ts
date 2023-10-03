@@ -6,6 +6,7 @@ import { DatabaseModule } from './database/database.module';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CategoryModule } from './modules/category/category.module';
+import { FileModule } from './modules/file/file.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { CategoryModule } from './modules/category/category.module';
     UserModule,
     AuthModule,
     CategoryModule,
+    FileModule,
   ],
   controllers: [],
   providers: [],
