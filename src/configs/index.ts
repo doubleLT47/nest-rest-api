@@ -13,4 +13,7 @@ export const validationSchema = Joi.object({
   AWS_SECRET_ACCESS_KEY: Joi.string().required(),
   AWS_REGION: Joi.string().required(),
   AWS_PRIVATE_BUCKET_NAME: Joi.string().required(),
+  ELASTICSEARCH_NODE: Joi.string().required(),
+  ELASTICSEARCH_USERNAME: Joi.string().required(),
+  ELASTICSEARCH_PASSWORD: Joi.string().required(),
 });

@@ -7,6 +7,7 @@ import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CategoryModule } from './modules/category/category.module';
 import { FileModule } from './modules/file/file.module';
+import { SearchModule } from './modules/search/search.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { FileModule } from './modules/file/file.module';
     AuthModule,
     CategoryModule,
     FileModule,
+    SearchModule,
   ],
   controllers: [],
   providers: [],
