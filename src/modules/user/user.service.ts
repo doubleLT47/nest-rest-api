@@ -10,6 +10,7 @@ import { Repository } from 'typeorm';
 import User from './entities/user.entity';
 import CreateUserDto from './dtos/create-user.dto';
 import { FileService } from '../file/file.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -49,6 +50,19 @@ export class UserService {
       'User with this id does not exist',
       HttpStatus.NOT_FOUND,
     );
+  }
+
+  async getUserIfRefreshTokenMatches(refreshToken: string, userId: number) {
+    const user = await this.getById(userId);
+
+    const isRefreshTokenMatching = await bcrypt.compare(
+      refreshToken,
+      user.currentHashedRefreshToken,
+    );
+
+    if (isRefreshTokenMatching) {
+      return user;
+    }
   }
 
   async addAvatar(userId: number, imageBuffer: Buffer, filename: string) {
@@ -112,5 +126,18 @@ export class UserService {
       );
     }
     throw new NotFoundException('User with this id does not exist');
+  }
+
+  async setCurrentRefreshToken(refreshToken: string, userId: number) {
+    const currentHashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+    await this.usersRepository.update(userId, {
+      currentHashedRefreshToken,
+    });
+  }
+
+  async removeRefreshToken(userId: number) {
+    return this.usersRepository.update(userId, {
+      currentHashedRefreshToken: null,
+    });
   }
 }

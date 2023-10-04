@@ -1,4 +1,4 @@
-import { Expose } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import {
   BaseEntity,
   Column,
@@ -25,6 +25,12 @@ class User extends BaseEntity {
   @Column()
   @Expose()
   public name: string;
+
+  @Column({
+    nullable: true,
+  })
+  @Exclude()
+  public currentHashedRefreshToken?: string;
 
   @Column()
   public password: string;

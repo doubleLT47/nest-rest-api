@@ -6,12 +6,14 @@ import { PostgresErrorCode } from '../../database/error-code.enum';
 import { ITokenPayload } from './auth.interface';
 import { JwtService } from '@nestjs/jwt';
 import User from '../user/entities/user.entity';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UserService,
     private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
   ) {}
 
   public async register(registrationData: CreateUserDto) {
@@ -73,12 +75,30 @@ export class AuthService {
       id,
       email,
     });
+    const refreshToken = this.generateRefreshToken({
+      id,
+      email,
+    });
     // user.password = undefined;
-    return { user, accessToken };
+    return { user, accessToken, refreshToken };
   }
 
-  private generateToken(payload: ITokenPayload) {
-    return this.jwtService.sign(payload);
+  public generateToken(payload: ITokenPayload) {
+    return this.jwtService.sign(payload, {
+      secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
+      expiresIn: `${this.configService.get(
+        'JWT_ACCESS_TOKEN_EXPIRATION_TIME',
+      )}s`,
+    });
+  }
+
+  private generateRefreshToken(payload: ITokenPayload) {
+    return this.jwtService.sign(payload, {
+      secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
+      expiresIn: `${this.configService.get(
+        'JWT_REFRESH_TOKEN_EXPIRATION_TIME',
+      )}s`,
+    });
   }
 
   private async verifyToken(token: string) {

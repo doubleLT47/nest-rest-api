@@ -16,4 +16,8 @@ export const validationSchema = Joi.object({
   ELASTICSEARCH_NODE: Joi.string().required(),
   ELASTICSEARCH_USERNAME: Joi.string().required(),
   ELASTICSEARCH_PASSWORD: Joi.string().required(),
+  JWT_ACCESS_TOKEN_SECRET: Joi.string().required(),
+  JWT_ACCESS_TOKEN_EXPIRATION_TIME: Joi.string().required(),
+  JWT_REFRESH_TOKEN_SECRET: Joi.string().required(),
+  JWT_REFRESH_TOKEN_EXPIRATION_TIME: Joi.string().required(),
 });
